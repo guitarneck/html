@@ -1,0 +1,44 @@
+{
+    "name": "guitarneck/html",
+    "description": "html form manager",
+    "keywords": ["php","html","form","transaction","validator","submitted"],
+    "homepage": "https://github.com/guitarneck/html",
+    "type": "library",
+    "require-dev": {
+        "guitarneck/taphp": "dev-master",
+        "guitarneck/taphp-color": "dev-master"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Laurent S.",
+            "email": "guitarneck@free.fr"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": ">=7.0.0",
+        "composer-runtime-api": "^2.0.0"
+    },
+    "autoload":{
+        "exclude-from-classmap": ["html/Element+*"],
+        "psr-4": {
+            "HTML\\": "html"
+        }
+    },
+    "scripts": {
+        "test": [
+            "Composer\\Config::disableProcessTimeout",
+            "@php tests/html-all.test.php"
+        ],
+        "publish":[
+            "@rebase-master",
+            "git push origin master"
+        ],
+        "rebase-master": "git pull --rebase origin master"
+    },
+    "scripts-descriptions": {
+        "test": "Run all tests!"
+    }
+}
