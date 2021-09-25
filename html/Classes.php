@@ -40,7 +40,7 @@ class Classes extends Properties
    protected
    function unstringify ($v)
    {
-      return [$v, ''];
+      return array($v, '');
    }
 
    protected
@@ -53,17 +53,17 @@ class Classes extends Properties
    {
       return $this->hasProperty($key);
    }
-   
+
    function getClass ($key)
    {
       return $this->getProperty($key);
    }
-   
+
    function setClass ($key, $val)
    {
       return $this->setProperty($key, $val);
    }
-   
+
    function setClasses ()
    {
       return call_user_func_array(array($this, 'setProperties'), func_get_args());

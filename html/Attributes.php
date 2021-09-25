@@ -52,17 +52,17 @@ class Attributes extends Properties
    {
       return $this->hasProperty($key);
    }
-   
+
    function getAttribute ($key)
    {
       return $this->getProperty($key);
    }
-   
-   function setAttribute ($key, $val)
+
+   function setAttribute ($key, $val=null)
    {
       return $this->setProperty($key, $val);
    }
-   
+
    function setAttributes ()
    {
       return call_user_func_array(array($this, 'setProperties'), func_get_args());
