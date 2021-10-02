@@ -64,7 +64,7 @@ class BooleanAttributes
    static
    function match ( $attribute )
    {
-      return isset(static::$attributes[strtolower($attribute[0])]) 
-          && in_array(strtolower($attribute),static::$attributes);
+      return isset(static::$attributes[strtolower($attribute[0])])
+          && in_array(strtolower($attribute),static::$attributes[strtolower($attribute[0])]);
    }
 }
