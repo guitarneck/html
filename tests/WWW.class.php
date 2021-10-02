@@ -11,9 +11,13 @@ class WWW
       $this->handle = popen("${bck}php -S localhost:8765 -t tests/e2e/ 2>$nul", 'r');
    }
 
+   function __destruct()
+   {
+      $this->close();
+   }
+
    function get ( $page, array $parameters=array() )
    {
-      $contents = '';
       $parms = count($parameters) > 0 ? '?' . implode('&',$parameters) : '';
       ob_start();
       echo file_get_contents("http://localhost:8765/$page$parms");
@@ -22,6 +26,7 @@ class WWW
 
    function close ()
    {
-      pclose($this->handle);
+      if ($this->handle) pclose($this->handle);
+      $this->handle = false;
    }
 }
