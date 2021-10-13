@@ -59,20 +59,20 @@ class Properties extends \stdClass
    {
       return $this->__isset($key);
    }
-   
+
    protected
    function getProperty ($key)
    {
       return $this->__get($key);
    }
-   
+
    protected
    function setProperty ($key, $val)
    {
       $this->__set($key, $val);
       return $this;
    }
-   
+
    protected
    function setProperties ()
    {
@@ -108,15 +108,15 @@ class Properties extends \stdClass
    function __get ($k)
    {
       $k = $this->metamorphosify($k);
-      return $this->{$k};
+      return $this->__isset($k) ? $this->{$k} : null;
    }
-   
+
    function __isset ($k)
    {
       $k = $this->metamorphosify($k);
       return property_exists($this, $k);
    }
-   
+
    function __unset ($k)
    {
       $k = $this->metamorphosify($k);

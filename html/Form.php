@@ -18,7 +18,7 @@ class Form extends Element
    private
    function sanytize ( $value )
    {
-      return is_array($value) ? implode(',', $value) : $value;
+      return is_array($value) ? array_map('trim',$value) : array(trim($value));
    }
 
    private
@@ -35,6 +35,7 @@ class Form extends Element
 
       $selBoxes   = array();
       $chkBoxes   = array();
+      $values     = array();
 
       foreach ($this->elements() as &$child)
       {
@@ -45,9 +46,9 @@ class Form extends Element
          {
             $submitted = true;
 
-            $child->value = $this->sanytize($array[$name]);
-            $child->validate();
-            
+            $values[$name] = $this->sanytize($array[$name]);
+            $child->validate($values[$name]);
+
             $this->ifErrors($child);
 
             if ($child->is('select')) $selBoxes[] = &$child;
@@ -55,8 +56,8 @@ class Form extends Element
          }
       }
 
-      $this->updateBoxes($selBoxes, 'selected');
-      $this->updateBoxes($chkBoxes, 'checked');
+      $this->updateBoxes($selBoxes, 'selected', $values);
+      $this->updateChildrenBoxes($chkBoxes, 'checked', $values);
 
       if ( !$submitted ) $this->initialize();
 
@@ -64,7 +65,7 @@ class Form extends Element
    }
 
    private
-   function updateBoxes ( $boxes=array(), $prop='selected' )
+   function updateBoxes ( $boxes=array(), $prop='selected', $values )
    {
       foreach ($boxes as &$box) // il faut les values du parent
       {
@@ -75,17 +76,31 @@ class Form extends Element
             foreach ($element->elements() as &$child) $children[] = &$child;
          }
 
+         $name = $this->normalize($box->name);
          foreach ($children as &$child)
          {
-            if (!is_a($child, Element::class) || !isset($child->value)) continue;
+            if (!is_a($child, Element::class) || !isset($child->value) || empty($child->value)) continue;
 
-            if (strpos($box->value, $child->value) !== false)
+            if (in_array($child->value, $values[$name]))
                $child->setAttribute($prop, null);
             else
                unset($child->$prop);
          }
+         //unset($box->value);
+      }
+   }
 
-         unset($box->value);
+   private
+   function updateChildrenBoxes ( $children=array(), $prop='checked', $values )
+   {
+      foreach ($children as &$child)
+      {
+         if (!is_a($child, Element::class) || !isset($child->value) || empty($child->value)) continue;
+
+         if (in_array($child->value, $values[$this->normalize($child->name)]))
+            $child->setAttribute($prop, null);
+         else
+            unset($child->$prop);
       }
    }
 }

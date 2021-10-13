@@ -5,7 +5,7 @@ namespace HTML;
 trait Initializator
 {
    private $initializator = null;
-   
+
    static
    function hasInitializator ( $object )
    {
@@ -16,17 +16,17 @@ trait Initializator
    {
       $this->initializator = $initializator;
       return $this;
-   }   
+   }
 
-   function & initialize ( $parent=null )
+   function & initialize ()
    {
       foreach ( $this->children as &$child )
       {
          if ( ! static::hasInitializator($child) ) continue;
-         $child->initialize($child);
+         $child->initialize();
       }
 
-      if ( $this->initializator !== null ) call_user_func($this->initializator, $this, $parent);
+      if ( $this->initializator !== null ) call_user_func($this->initializator, $this);
       return $this;
    }
 }

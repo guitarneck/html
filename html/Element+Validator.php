@@ -5,7 +5,7 @@ namespace HTML;
 trait Validator
 {
    private $validator = null;
-   
+
    static
    function hasValidator ( $object )
    {
@@ -18,15 +18,15 @@ trait Validator
       return $this;
    }
 
-   function & validate ( $parent=null )
+   function & validate ( $value=null )
    {
       foreach ( $this->children as &$child )
       {
          if ( ! static::hasValidator($child) ) continue;
-         $child->validate($child);
+         $child->validate($value);
       }
 
-      if ( $this->validator !== null ) call_user_func($this->validator, $this, $parent);
+      if ( $this->validator !== null ) call_user_func($this->validator, $this, $value);
       return $this;
    }
 }

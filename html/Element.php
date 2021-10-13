@@ -22,7 +22,7 @@ class Element extends Attributes
    use Initializator;
    use Validator;
    use Children { __toString as private childrenToString; }
-   
+
    static   $id_prefix = '';
 
    private  $tagname;
@@ -71,7 +71,8 @@ class Element extends Attributes
 
    function is ( $tagname )
    {
-      return strtolower($this->tagname) === $tagname;
+      return strtolower($this->tagname) === $tagname ||
+            (strtolower($this->tagname) === 'input' && static::isInputType($tagname) && $this->getAttribute('type') === $tagname);
    }
 
    function isNonContainer ()
@@ -94,7 +95,7 @@ class Element extends Attributes
       return $this->isNonContainer()?' />':'</'.sprintf($this->split_htmltag()[1], $this->tagname);
    }
 
-   protected 
+   protected
    function ifErrors ( $element )
    {
       if ( $element->hasErrors() ) $this->error($element->errors());
