@@ -2,12 +2,36 @@
 
 namespace HTML;
 
+/**
+ * Upload data class descriptors.
+ *
+ * @class UploadData
+ * @file Upload.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class UploadData
 {
+   /** The uploaded filename.
+    * @var string
+    */
 	public	$filename;
+   /** The size of the uploaded file.
+    * @var int
+    */
 	public	$size;
+   /** The mime type of the uploaded file.
+    * @var string
+    */
 	public	$mimetype;
+   /** The path of the uploaded file.
+    * @var string
+    */
 	public	$temporary;
+   /** The error code of the uploaded file.
+    * @var string
+    */
 	public	$error;
 
 	function __construct ( $upload )
@@ -19,27 +43,56 @@ class UploadData
 		$this->error = $upload['error'];
 	}
 
+   /**
+    * Tell if the uploaded file is valid.
+    *
+    * @return boolean   True if their's non error, false otherwise.
+    */
 	function isValid ()
 	{
 		return $this->error === 'ok';
 	}
 }
 
+/**
+ * Iterator class.
+ *
+ * @class Upload
+ * @file Upload.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class Upload
 {
 	private	$datas;
 
+   /**
+    * Constructor.
+    *
+    * @param string $name  The HTML File type input element name.
+    */
 	function __construct ( $name )
 	{
 		$this->datas = $this->extract($this->normalize($name));
 	}
 
+   /**
+    * Retrieve the datas of a single file.
+    *
+    * @return UploadData   The datas file.
+    */
 	public
 	function file ()
 	{
 		return $this->datas[0];
 	}
 
+   /**
+    * Retrieve each datas. Generator.
+    *
+    * @return UploadData   The datas file.
+    */
 	public
 	function files ()
 	{
@@ -70,7 +123,7 @@ class Upload
 		});
 
 		return $result;
-  	} 
+  	}
 
 	private
 	function message ( $code )

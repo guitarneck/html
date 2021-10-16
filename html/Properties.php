@@ -5,8 +5,22 @@ namespace HTML;
 require_once 'Iterator.php';
 use HTML\Iterator;
 
+/**
+ * A class to manage generic properties.
+ *
+ * @class Properties
+ * @file Properties.php
+ * @since 1.0.0
+ * @date may 2021
+ * @author guitarneck <guitarneck@free.fr>
+ */
 class Properties extends \stdClass
 {
+   /**
+    * constructor.
+    *
+    * @param string|array|pair|void The properties to be set.
+    */
    function __construct ()
    {
       if ( func_num_args() > 0 ) call_user_func_array(array($this, 'setProperties'), func_get_args());
@@ -124,6 +138,11 @@ class Properties extends \stdClass
       return $this->__isset($k);
    }
 
+   /**
+    * Retrieve an iterator of the properties.
+    *
+    * @return Iterator  An iterator of the properties.
+    */
    function iterator ()
    {
       return new Iterator($this);

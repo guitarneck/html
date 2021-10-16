@@ -2,10 +2,26 @@
 
 namespace HTML;
 
+/**
+ * Trait to manage the validator of an Element.
+ *
+ * @class Validator
+ * @file Element+Validator.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 trait Validator
 {
    private $validator = null;
 
+   /**
+    * Tell if a validator exists.
+    *
+    * @static
+    * @param Element $object  An element instance.
+    * @return boolean   Ture if exists, false otherwise.
+    */
    static
    function hasValidator ( $object )
    {

@@ -4,6 +4,15 @@ namespace HTML;
 
 require_once 'Element.php';
 
+/**
+ * Class to manage Form HTML element.
+ *
+ * @class Form
+ * @file Form.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class Form extends Element
 {
    const   ENCTYPE_DATA = "multipart/form-data";
@@ -70,11 +79,14 @@ class Form extends Element
       foreach ($boxes as &$box) // il faut les values du parent
       {
          $children = array();
-         foreach ($box->elements() as &$element)
-         {
-            $children[] = &$element;
-            foreach ($element->elements() as &$child) $children[] = &$child;
-         }
+         if ($box->length() === 0)
+            $children[] = &$box;
+         else
+            foreach ($box->elements() as &$element)
+            {
+               $children[] = &$element;
+               foreach ($element->elements() as &$child) $children[] = &$child;
+            }
 
          $name = $this->normalize($box->name);
          foreach ($children as &$child)

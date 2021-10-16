@@ -2,11 +2,21 @@
 
 namespace HTML;
 
+/**
+ * Factory class to to create elements.
+ *
+ * @class Factory
+ * @file Factory.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class Factory
 {
    /**
     * Create a Form object.
     *
+    * @static
     * @param string $name        The name of the form.
     * @param array $attributes   Additional attributes of the form.
     * @return Form   A Form object.
@@ -21,6 +31,7 @@ class Factory
    /**
     * Create a Text object.
     *
+    * @static
     * @param string $text  The text.
     * @return Text         A text object.
     */
@@ -33,6 +44,7 @@ class Factory
    /**
     * Create an input Element.
     *
+    * @static
     * @param string $name        The name of the input.
     * @param string $type        The type of the input [default: submit].
     * @param array $attributes   Additional attributes of the input.
@@ -47,10 +59,11 @@ class Factory
       $attributes['type'] = $type;
       return new Element('input', $attributes);
    }
-   
+
    /**
     * Create an button Element.
     *
+    * @static
     * @param string $name        The name of the button.
     * @param string $type        The type of the button [default: button].
     * @param array $attributes   Additional attributes of the input.
@@ -63,12 +76,13 @@ class Factory
       $attributes['type'] = $type;
       return new Element('button', $attributes);
    }
-   
+
    /**
     * Create an textarea Element.
     *
+    * @static
     * @param string $name        The name of the textarea.
-    * @param array $attributes   Additional attributes of the textarea.   
+    * @param array $attributes   Additional attributes of the textarea.
     * @param string|null $text   Optional text of the textarea.
     * @return Element            A textarea Element object.
     */
@@ -81,10 +95,11 @@ class Factory
       else
          return new Element('textarea', $attributes);
    }
-   
+
    /**
     * Create an select Element.
     *
+    * @static
     * @param string $name        The name of the select.
     * @param array $attributes   Additional attributes of the select.
     * @return Element            A select Element object.
@@ -95,10 +110,11 @@ class Factory
       $attributes['name'] = $name;
       return new Element('select', $attributes);
    }
-   
+
    /**
     * Create an option Element.
     *
+    * @static
     * @param string $text        The text of the option.
     * @param string $value       The value of the option.
     * @param array $attributes   Additional attributes of the option.
@@ -110,10 +126,11 @@ class Factory
       $attributes['value'] = $value;
       return (new Element('option', $attributes))->add(static::Text($text));
    }
-   
+
    /**
     * Create an optgroup Element.
     *
+    * @static
     * @param string $label       The label of the optgroup
     * @param array $attributes   Additional attributes of the optgroup.
     * @return Element            A optgroup Element object.
@@ -128,6 +145,7 @@ class Factory
    /**
     * Create a label Element.
     *
+    * @static
     * @param Element|string $for    An Element object or an id for the label.
     * @param mixed $content         The content of the label.
     * @param array $attributes      Additional attributes of the label.
@@ -150,6 +168,7 @@ class Factory
    /**
     * Create a datalist Element.
     *
+    * @static
     * @param Element $input      The input element for the datalist.
     * @param array $attributes   Additional attributes of the datalist.
     * @return Element            A datalist Element object.
@@ -165,6 +184,7 @@ class Factory
    /**
     * Create an output Element.
     *
+    * @static
     * @param string $name        The name of the output.
     * @param array $attributes   Additional attributes of the output.
     * @return Element            A output Element object.
@@ -175,10 +195,11 @@ class Factory
       $attributes['name'] = $name;
       return new Element('output', $attributes);
    }
-   
+
    /**
     * Create a meter Element.
     *
+    * @static
     * @param string $name        The name of the meter.
     * @param array $attributes   Additional attributes of the meter.
     * @return Element            A meter Element object.
@@ -193,6 +214,7 @@ class Factory
    /**
     * Create a progress Element.
     *
+    * @static
     * @param string $name        The name of the progress.
     * @param array $attributes   Additional attributes of the progress.
     * @return Element            A progress Element object.

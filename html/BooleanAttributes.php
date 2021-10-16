@@ -2,6 +2,15 @@
 
 namespace HTML;
 
+/**
+ * Class to detect boolean attributes.
+ *
+ * @class BooleanAttributes
+ * @file BooleanAttributes.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class BooleanAttributes
 {
    static private
@@ -61,6 +70,13 @@ class BooleanAttributes
       )
    );
 
+   /**
+    * Tell if an attribute name is of boolean type.
+    *
+    * @static
+    * @param string $attribute   The attribute to test.
+    * @return bool   True when it is a boolean attribute, false otherwise.
+    */
    static
    function match ( $attribute )
    {

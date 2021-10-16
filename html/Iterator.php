@@ -2,10 +2,19 @@
 
 namespace HTML;
 
+/**
+ * Iterator class.
+ *
+ * @class Iterator
+ * @file Iterator.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 class Iterator implements \Iterator
 {
    private $attributes;
-   
+
    public function __construct( $attributes )
    {
       $this->attributes = get_object_vars($attributes);

@@ -2,10 +2,26 @@
 
 namespace HTML;
 
+/**
+ * Trait to manage the initializator of an Element.
+ *
+ * @class Initializator
+ * @file Element+Initializator.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 trait Initializator
 {
    private $initializator = null;
 
+   /**
+    * Telle if an initializator exists.
+    *
+    * @static
+    * @param Element $object  An element instance.
+    * @return boolean   Ture if exists, false otherwise.
+    */
    static
    function hasInitializator ( $object )
    {

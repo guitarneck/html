@@ -13,6 +13,20 @@ require_once 'EmptyTags.php';
 
 use HTML\Attributes;
 
+/**
+ * Class to manage HTML Elements.
+ *
+ * @class Element
+ * @file Element.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ * @extends Attributes
+ * @extends Errors
+ * @extends Initializator
+ * @extends Validator
+ * @extends Children
+ */
 class Element extends Attributes
 {
    const TAG_SIMPLE = '<%1$s %2$s />';
@@ -28,12 +42,25 @@ class Element extends Attributes
    private  $tagname;
    private  $htmltag;
 
+   /**
+    * Tell if type attribute is a valid input type.
+    *
+    * @static
+    * @param string $type  The type of the input element.
+    * @return boolean   True when it's an input type, false otherwise.
+    */
    static
    function isInputType ( $type )
    {
        return preg_match('/button|checkbox|color|date|datetime-local|email|file|hidden|image|month|number|password|radio|range|reset|search|submit|tel|text|time|url|week/i',$type);
    }
 
+   /**
+    * Constructor.
+    *
+    * @param string $tagname  The tagname of the element.
+    * @param string|array|pair $attributes   The attributes to be sets.
+    */
    function __construct ( $tagname='form', $attributes=null )
    {
       parent::__construct($attributes);
@@ -45,15 +72,26 @@ class Element extends Attributes
       return $this;
    }
 
+   /**
+    * Retrive the id of the element.
+    *
+    * @return string The id.
+    */
    function id ()
    {
       return $this->__get('id');
    }
 
+   /**
+    * Sets and/or retrieve the tagname of the element. ex: input, select, span, etc.
+    *
+    * @param string $tagname  The tagname.
+    * @return string The tagname.
+    */
    protected
-   function tagname ( $name=null )
+   function tagname ( $tagname=null )
    {
-      if ($name !== null) $this->tagname = $name;
+      if ($tagname !== null) $this->tagname = $tagname;
       return $this->tagname;
    }
 
@@ -69,27 +107,53 @@ class Element extends Attributes
       return preg_split('# />|</#', $this->htmltag);
    }
 
+   /**
+    * Tell if the tagname match.
+    *
+    * @param string $tagname  The tagname.
+    * @return boolean   True if it match, false otherwise.
+    */
    function is ( $tagname )
    {
       return strtolower($this->tagname) === $tagname ||
             (strtolower($this->tagname) === 'input' && static::isInputType($tagname) && $this->getAttribute('type') === $tagname);
    }
 
+   /**
+    * Teel it this element is a non container element.
+    *
+    * @return boolean   True if it's a non container element, false otherwise.
+    */
    function isNonContainer ()
    {
       return strpos($this->htmltag, ' />') !== false;
    }
 
+   /**
+    * Retrieve the children of this element.
+    *
+    * @return Element|Text A child.
+    */
    function & elements ()
    {
       foreach ( $this->children as &$child ) yield $child;
    }
 
+   /**
+    * Retrieve the open tagname of this element.
+    *
+    * @return string The opening tag.
+    */
    function open ()
    {
       return sprintf($this->split_htmltag()[0], $this->tagname, parent::__toString(), '');
    }
 
+   /**
+    * Retrieve the close tag of this element.
+    *
+    * @return string The closing tag.
+    */
    function close ()
    {
       return $this->isNonContainer()?' />':'</'.sprintf($this->split_htmltag()[1], $this->tagname);

@@ -2,6 +2,15 @@
 
 namespace HTML;
 
+/**
+ * Trait to manage the errors of an Element.
+ *
+ * @class Errors
+ * @file Element+Errors.php
+ * @author guitarneck <guitarneck@free.fr>
+ * @since 1.0.0
+ * @date may 2021
+ */
 trait Errors
 {
     private  $errors = array();

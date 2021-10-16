@@ -6,7 +6,8 @@
     "type": "library",
     "require-dev": {
         "guitarneck/taphp": "dev-master",
-        "guitarneck/taphp-color": "dev-master"
+        "guitarneck/taphp-color": "dev-master",
+        "theseer/phpdox": "^0.12.0"
     },
     "license": "MIT",
     "authors": [
@@ -35,6 +36,10 @@
         "publish":[
             "@rebase-master",
             "git push origin master"
+        ],
+        "docs":[
+           "phpdox.bat",
+           "RMDIR /S /Q docs\\build"
         ],
         "rebase-master": "git pull --rebase origin master"
     },
