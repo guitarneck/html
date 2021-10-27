@@ -136,7 +136,12 @@ class Element extends Attributes
     */
    function & elements ()
    {
-      foreach ( $this->children as &$child ) yield $child;
+      foreach ( $this->children as &$child )
+      {
+         yield $child;
+         if ( Children::hasChildren($child) ) foreach ( $child->elements() as $subchild ) yield $subchild;
+      }
+
    }
 
    /**

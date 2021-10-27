@@ -42,12 +42,9 @@ class Form extends Element
       if (!empty($_FILES)) $array = array_merge($array, array_flip(array_keys($_FILES)));
       $submitted = false;
 
-      $selBoxes   = array();
-      $chkBoxes   = array();
-      $values     = array();
-
       foreach ($this->elements() as &$child)
       {
+         if ( ! property_exists($child,'name') ) continue;
          $name = $this->normalize($child->name);
          if ($name === '') continue;
 
@@ -55,18 +52,15 @@ class Form extends Element
          {
             $submitted = true;
 
-            $values[$name] = $this->sanytize($array[$name]);
-            $child->validate($values[$name]);
+            $value = $this->sanytize($array[$name]);
+            $child->validate($value);
 
             $this->ifErrors($child);
 
-            if ($child->is('select')) $selBoxes[] = &$child;
-            if ($child->is('checkbox')) $chkBoxes[] = &$child;
+            if ($child->is('select')) $this->updateSelect($child, 'selected', $value);
+            if ($child->is('checkbox')) $this->updateCheckbox($child, 'checked', $value);
          }
       }
-
-      $this->updateBoxes($selBoxes, 'selected', $values);
-      $this->updateChildrenBoxes($chkBoxes, 'checked', $values);
 
       if ( !$submitted ) $this->initialize();
 
@@ -74,8 +68,9 @@ class Form extends Element
    }
 
    private
-   function updateBoxes ( $boxes=array(), $prop='selected', $values )
+   function updateSelect ( $box, $prop='selected', $value )
    {
+<<<<<<< HEAD
       foreach ($boxes as &$box) // il faut les values du parent
       {
          $children = array();
@@ -87,32 +82,35 @@ class Form extends Element
                $children[] = &$element;
                foreach ($element->elements() as &$child) $children[] = &$child;
             }
-
-         $name = $this->normalize($box->name);
-         foreach ($children as &$child)
+=======
+      $children = array();
+      if ($box->length() === 0)
+         $children[] = &$box;
+      else
+         foreach ($box->elements() as &$element)
          {
-            if (!is_a($child, Element::class) || !isset($child->value) || empty($child->value)) continue;
-
-            if (in_array($child->value, $values[$name]))
-               $child->setAttribute($prop, null);
-            else
-               unset($child->$prop);
+            $children[] = &$element;
+            if ( Children::hasChildren($element) ) foreach ($element->elements() as &$child) $children[] = &$child;
          }
-         //unset($box->value);
-      }
-   }
+>>>>>>> issue with multichildren level
 
-   private
-   function updateChildrenBoxes ( $children=array(), $prop='checked', $values )
-   {
       foreach ($children as &$child)
       {
          if (!is_a($child, Element::class) || !isset($child->value) || empty($child->value)) continue;
 
-         if (in_array($child->value, $values[$this->normalize($child->name)]))
+         if (in_array($child->value, $value))
             $child->setAttribute($prop, null);
          else
             unset($child->$prop);
       }
+   }
+
+   private
+   function updateCheckbox ( & $child, $prop='checked', $value )
+   {
+      if (in_array($child->value, $value) || in_array('on', $value))
+         $child->setAttribute($prop, null);
+      else
+         unset($child->$prop);
    }
 }
