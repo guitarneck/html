@@ -41,6 +41,19 @@ class ChildrenList
       return $null;
    }
 
+   /**
+    * Retrieve a child at position.
+    *
+    * @param int  $at   The position in the list.
+    * @return null|Element|Text  The child.
+    */
+   function & item ( $at )
+   {
+      $null = null;
+      if ( empty($this->list) ) return $null;
+      return $this->list[max(0,min($at,count($this->list)))];
+   }
+
    function __toString ()
    {
       $string = '';
@@ -133,6 +146,22 @@ trait Children
    }
 
    /**
+    * Retrieve a reference to the child element.
+    *
+    * @param string $name  The name of the child.
+    * @return Element|Text|null The child or null.
+    */
+   function & elementByName ( $name )
+   {
+      $null = null;//Return by reference case
+      foreach ( $this->children as &$child )
+      {
+         if ( isset($child->{'name'}) && $child->{'name'} === $name ) return $child;
+      }
+      return $null;
+   }
+
+   /**
     * Retrieve a child by its id. null if not found.
     *
     * @param string $id The id.
@@ -153,11 +182,11 @@ trait Children
     *
     * @param string $name  The name of the element.
     * @return Element|Text The element.
-    * @see Children::elementsByName()
+    * @see Children::elementsByName(), Children::elementByName()
     */
    function & __invoke ( $name )
    {
-      return $this->elementsByName( $name );
+      return $this->elementByName( $name );
    }
 
    function __toString ()
