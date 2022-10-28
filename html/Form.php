@@ -57,8 +57,8 @@ class Form extends Element
 
             $this->ifErrors($child);
 
-            if ($child->is('select')) $this->updateSelect($child, 'selected', $value);
-            if ($child->is('checkbox')) $this->updateCheckbox($child, 'checked', $value);
+            if ($child->is('select')) $this->updateSelect($child, $value);
+            if ($child->is('checkbox')) $this->updateCheckbox($child, $value);
          }
       }
 
@@ -68,8 +68,10 @@ class Form extends Element
    }
 
    private
-   function updateSelect ( $box, $prop='selected', $value )
+   function updateSelect ( $box, $value )
    {
+      $prop='selected';
+
       $children = array();
       if ($box->length() === 0)
          $children[] = &$box;
@@ -92,8 +94,10 @@ class Form extends Element
    }
 
    private
-   function updateCheckbox ( & $child, $prop='checked', $value )
+   function updateCheckbox ( & $child, $value )
    {
+      $prop='checked';
+
       if (in_array($child->value, $value) || in_array('on', $value))
          $child->setAttribute($prop, null);
       else
